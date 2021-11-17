@@ -1,4 +1,5 @@
 import 'package:final_app/add_person.dart';
+import 'package:final_app/card_widget.dart';
 import 'package:flutter/material.dart';
 
 class SecondPage extends StatelessWidget {
@@ -20,7 +21,11 @@ class SecondPage extends StatelessWidget {
       body: Container(
         child: ListTile(
           subtitle: Column(children: [
-            
+            CardWidget(
+              name: 'Juan Manuel',
+              lastName: 'Londoño González',
+              id: '1',
+            )
           ],),
         ),
       ),
