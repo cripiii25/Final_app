@@ -4,8 +4,9 @@ class Person {
   String? lastName;
   String? address;
   String? dateOfBirth;
-  String? dateOfAdmission;
   String? wage; 
+  String? dateOfAdmission;
+ 
 
   Person({this.id, this.name, this.lastName, this.address, this.dateOfAdmission, this.dateOfBirth, this.wage});
 

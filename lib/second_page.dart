@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:final_app/add_person.dart';
-import 'package:final_app/card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+
+import 'models/person.dart';
 
 class SecondPage extends StatefulWidget {
   @override
@@ -8,7 +12,9 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
-  var listPersons = [];
+  List<Person> listPersons = [];
+
+  get http => null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,28 +23,59 @@ class _SecondPageState extends State<SecondPage> {
         actions: [
           InkWell(
             child: Icon(Icons.person_add),
-            onTap: (){
-              Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddPerson()));
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AddPerson())).then((value) {
+                if (value) {
+                  callServiceGetListPersons();
+                }
+              });
             },
           )
         ],
       ),
-      body: Container(
-        child: ListTile(
-          subtitle: Column(children: [
-            CardWidget(
-              name: 'Juan Manuel',
-              lastName: 'Londoño González',
-              id: '1',
-              DateOfAdmission: '17/11/2021',
-              DateOfBirth: '02/06/2003',
-              address: 'Cl 79C CR F24',
-              wage: '3.000.000',
-            )
-          ],),
-        ),
+      body: ListView.builder(
+        itemCount: listPersons.length,
+        itemBuilder: (context, index) {
+          return Card(
+            elevation: 4.0,
+            margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+            child: ListTile(
+              leading: const Icon(Icons.person),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  //Agregar eliminar
+                },
+              ),
+              title: Text(
+                  '${listPersons[index].name} ${listPersons[index].lastName}'),
+              subtitle: Text(
+                  '${listPersons[index].id} ${listPersons[index].address}${listPersons[index].dateOfAdmission}${listPersons[index].dateOfAdmission}'),
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.update),
+        onPressed: () => callServiceGetListPersons(),
       ),
     );
+  }
+
+  callServiceGetListPersons() async {
+    var url = Uri.parse('https://6186960dcd8530001765ab39.mockapi.io/');
+    Response response = await http.get(url);
+    if (response.statusCode >= 200 && response.statusCode <= 300) {
+      listPersons = (jsonDecode(response.body) as List).map((personJson) {
+        return Person.fromJson(personJson);
+      }).toList();
+
+      setState(() {});
+    } else {
+      print('Hubo un error');
+    }
   }
 }
