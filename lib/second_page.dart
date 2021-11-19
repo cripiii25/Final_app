@@ -51,9 +51,9 @@ class _SecondPageState extends State<SecondPage> {
                 },
               ),
               title: Text(
-                  '${listPersons[index].name} ${listPersons[index].lastName}'),
+                  '${listPersons[index].name!} ${listPersons[index].lastName!}'),
               subtitle: Text(
-                  '${listPersons[index].id} ${listPersons[index].address}${listPersons[index].dateOfAdmission}${listPersons[index].dateOfAdmission}'),
+                  '${listPersons[index].id!} ${listPersons[index].address!}${listPersons[index].dateOfAdmission!}${listPersons[index].dateOfAdmission!}'),
             ),
           );
         },
@@ -76,6 +76,17 @@ class _SecondPageState extends State<SecondPage> {
       setState(() {});
     } else {
       print('Hubo un error');
+    }
+  }
+
+  Future deleteService(int id) async {
+    final response = await http.delete(Uri.parse('https://6186960dcd8530001765ab39.mockapi.io/$id'));
+
+    if(response.statusCode ==200){
+      return true;
+    }
+    else{
+      return false;
     }
   }
 }
