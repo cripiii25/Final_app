@@ -20,9 +20,9 @@ class _SecondPageState extends State<SecondPage> {
         title: const Text('Gestor de Empleados'),
         actions: [
           InkWell(
-              child: Icon(Icons.person_add),
-              onTap: () => callCreatePersonPage(),
-            )
+            child: Icon(Icons.person_add),
+            onTap: () => callCreatePersonPage(),
+          )
         ],
       ),
       body: ListView.builder(
@@ -35,18 +35,15 @@ class _SecondPageState extends State<SecondPage> {
                 leading: const Icon(Icons.person),
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    //setState(() {
-                    //_futurePerson =
-                    //  deleteService(listPersons[index].id!);
-                    //});
-                    //
+                  onPressed: (){
+                    //deletePerson(index);
                   },
                 ),
                 title: Text(
                     '${listPersons[index].name!} ${listPersons[index].lastName!}'),
                 subtitle: Text(
-                    '${listPersons[index].id!} ${listPersons[index].address!}${listPersons[index].dateOfAdmission!}${listPersons[index].dateOfAdmission!}'),
+                    '[ID ${listPersons[index].id!} ]  [ ${listPersons[index].address!} ] [  ${listPersons[index].dateOfBirth!} ] [  ${listPersons[index].dateOfAdmission!} ]',
+                    style:TextStyle(fontSize:10.0),),
               ));
         },
       ),
@@ -81,15 +78,29 @@ class _SecondPageState extends State<SecondPage> {
       print('Hubo un error');
     }
   }
+  /*deletePerson(id) async {
+    var url =
+        Uri.parse('https://6186960dcd8530001765ab39.mockapi.io/Empleados/$id');
+    Response response = await http.delete(url);
+    if (response.statusCode >= 200 && response.statusCode <= 300) {
+      listPersons = (jsonDecode(response.body) as List).map((personJson) {
+        return Person.fromJson(personJson);
+      }).toList();
 
-  Future deleteService(int id) async {
+      setState(() {});
+    } else {
+      print('Hubo un error');
+    }
+  }*/
+
+   /*Future deleteService(id) async {
     final response = await http.delete(
-        Uri.parse('https://6186960dcd8530001765ab39.mockapi.io/Empleados/$id'));
-
-    if (response.statusCode == 200) {
+        Uri.parse('https://6186960dcd8530001765ab39.mockapi.io/Empleados/${id}'));
+    if (response.statusCode == 200 && response.statusCode <= 300) {
       return true;
     } else {
       return false;
     }
-  }
+  } */
+  
 }
