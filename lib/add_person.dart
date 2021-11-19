@@ -14,7 +14,6 @@ class AddPerson extends StatefulWidget {
 class _AddPersonState extends State<AddPerson> {
   var textEditingControllerName = TextEditingController();
   var textEditingControllerLastName = TextEditingController();
-  var textEditingControllerId = TextEditingController();
   var textEditingControllerAddress = TextEditingController();
   var textEditingControllerDateOfBirth = TextEditingController();
   var textEditingControllerDateOfAdmission = TextEditingController();
@@ -36,17 +35,6 @@ class _AddPersonState extends State<AddPerson> {
                 size: 75.0,
               ),
               maxRadius: 100.0,
-            ),
-            TextField(
-                controller: textEditingControllerId,
-                decoration: const InputDecoration(
-                    hintText: 'Identificatión',
-                    hintStyle: TextStyle(color: Colors.black),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.horizontal(
-                            left: Radius.circular(5.0))))),
-            const SizedBox(
-              height: 15.0,
             ),
             TextField(
                 controller: textEditingControllerName,
@@ -118,7 +106,6 @@ class _AddPersonState extends State<AddPerson> {
             ElevatedButton(
                 onPressed: () {
                   callServiceCreatePerson(
-                      textEditingControllerId.text,
                       textEditingControllerName.text,
                       textEditingControllerLastName.text,
                       textEditingControllerAddress.text,
@@ -134,7 +121,6 @@ class _AddPersonState extends State<AddPerson> {
   }
 
   void callServiceCreatePerson(
-    String id,
     String name,
     String lastName,
     String address,
@@ -143,7 +129,6 @@ class _AddPersonState extends State<AddPerson> {
     String dateOfAdmission,
   ) async {
     var person = Person(
-      id: id,
       name: name,
       lastName: lastName,
       address: address,
@@ -152,7 +137,7 @@ class _AddPersonState extends State<AddPerson> {
       dateOfAdmission: dateOfAdmission,
     );
 
-    var url = Uri.parse('https://6186960dcd8530001765ab39.mockapi.io/');
+    var url = Uri.parse('https://6186960dcd8530001765ab39.mockapi.io/Empleados');
     var personBody = jsonEncode(person);
 
     Response response = await http.post(
