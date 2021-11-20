@@ -36,7 +36,7 @@ class _SecondPageState extends State<SecondPage> {
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
                   onPressed: (){
-                    //deletePerson(index);
+                    deletePerson('${listPersons[index].id}');
                   },
                 ),
                 title: Text(
@@ -78,20 +78,17 @@ class _SecondPageState extends State<SecondPage> {
       print('Hubo un error');
     }
   }
-  /*deletePerson(id) async {
+  deletePerson(id) async {
     var url =
         Uri.parse('https://6186960dcd8530001765ab39.mockapi.io/Empleados/$id');
     Response response = await http.delete(url);
     if (response.statusCode >= 200 && response.statusCode <= 300) {
-      listPersons = (jsonDecode(response.body) as List).map((personJson) {
-        return Person.fromJson(personJson);
-      }).toList();
-
+      callServiceGetListPersons(); 
       setState(() {});
     } else {
-      print('Hubo un error');
+      print('Hubo un error al Eliminar');
     }
-  }*/
+  }
 
    /*Future deleteService(id) async {
     final response = await http.delete(
@@ -102,5 +99,7 @@ class _SecondPageState extends State<SecondPage> {
       return false;
     }
   } */
-  
+
+  //Boton de alerta  
 }
+
